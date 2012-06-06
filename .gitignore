@@ -1,0 +1,5 @@
+.rvmrc
+log/*
+!log/.gitkeep
+tmp/*
+!tmp/.gitkeep
