@@ -1,9 +1,13 @@
 #!/usr/bin/env ruby
 
 require File.expand_path('../config/application.rb', __FILE__)
+
 require 'logger'
+require 'sinatra/reloader'
 
 class MyApp < Sinatra::Base
+  
+  register Sinatra::Reloader
   
   set :show_exceptions, false
   set :public, "#{root}/public"
@@ -23,7 +27,7 @@ class MyApp < Sinatra::Base
   before do
     content_type :json, :default => true
     @json = {
-      :environment => MyApp.environment,
+      :environment => MyApp.environment
     }
   end
 
