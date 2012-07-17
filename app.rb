@@ -9,7 +9,7 @@ class MyApp < Sinatra::Base
   
   register Sinatra::Reloader
   
-  set :show_exceptions, false
+  set :show_exceptions, (environment == :development)
   set :public, "#{root}/public"
 
   class << self
