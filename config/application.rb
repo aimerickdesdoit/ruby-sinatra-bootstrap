@@ -17,3 +17,6 @@ end if File.exist?(gemfile)
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, env) if defined?(Bundler)
+
+lib_dir = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
