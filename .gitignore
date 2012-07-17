@@ -1,4 +1,5 @@
 .rvmrc
+.DS_Store
 log/*
 !log/.gitkeep
 tmp/*

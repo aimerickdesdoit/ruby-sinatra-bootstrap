@@ -9,8 +9,13 @@ class MyApp < Sinatra::Base
   
   register Sinatra::Reloader
   
-  set :show_exceptions, (environment == :development)
-  set :public, "#{root}/public"
+  helpers MyAppHelpers
+  
+  set({
+    :show_exceptions  => (environment == :development),
+    :public_folder    => "#{root}/public",
+    :views            => "#{root}/app/views"
+  })
 
   class << self
     

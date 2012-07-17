@@ -20,3 +20,5 @@ Bundler.require(:default, env) if defined?(Bundler)
 
 lib_dir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
+
+Dir[File.expand_path('../../app/helpers/*', __FILE__)].each { |helper| require helper }
