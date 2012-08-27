@@ -1,6 +1,6 @@
 require 'rubygems'
 
-env = (ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development").to_sym
+APP_ENV = (ENV["RACK_ENV"] || ENV["RAILS_ENV"] || "development").to_sym
 
 # Set up gems listed in the Gemfile.
 gemfile = File.expand_path('../../Gemfile', __FILE__)
@@ -16,9 +16,12 @@ end if File.exist?(gemfile)
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, env) if defined?(Bundler)
+Bundler.require(:default, APP_ENV) if defined?(Bundler)
 
 lib_dir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
 Dir[File.expand_path('../../app/helpers/*', __FILE__)].each { |helper| require helper }
+
+# addons
+# require File.expand_path('../addons/active_record', __FILE__)
