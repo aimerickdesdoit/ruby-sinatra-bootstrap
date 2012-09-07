@@ -17,7 +17,8 @@ class MyApp < Sinatra::Base
   end
   
   configure do
-    helpers MyAppHelpers
+    helpers HtmlHelpers
+    helpers SprocketsHelpers
     helpers Sinatra::ContentFor
     
     register Sinatra::Partial

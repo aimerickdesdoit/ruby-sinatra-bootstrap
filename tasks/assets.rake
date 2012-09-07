@@ -2,6 +2,8 @@ namespace :assets do
   
   desc "Compile all the assets"
   task :precompile do
+    Rake::Task['assets:clean'].invoke
+    
     environment = Sinatra::Sprockets.environment
     environment.each_logical_path do |logical_path|
       if asset = environment.find_asset(logical_path)
