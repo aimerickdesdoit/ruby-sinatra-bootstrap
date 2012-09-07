@@ -21,7 +21,6 @@ Bundler.require(:default, APP_ENV) if defined?(Bundler)
 lib_dir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
-Dir[File.expand_path('../../app/helpers/*', __FILE__)].each { |helper| require helper }
-
-# addons
-# require File.expand_path('../addons/active_record', __FILE__)
+[:helpers, :sprockets].each do |initializer|
+  require File.expand_path("../initializers/#{initializer}.rb", __FILE__)
+end

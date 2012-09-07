@@ -57,6 +57,5 @@
 	# controllers
 
 	get '/' do
-	  @message = 'Hello world !'
 	  haml :index
 	end

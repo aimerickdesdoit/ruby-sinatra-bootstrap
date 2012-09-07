@@ -24,6 +24,7 @@ class MyApp < Sinatra::Base
     
     set({
       # :show_exceptions  => false, # test error handling
+      :environment      => APP_ENV,
       :public_folder    => "#{root}/public",
       :views            => "#{root}/app/views",
       :haml             => {
@@ -63,7 +64,6 @@ class MyApp < Sinatra::Base
   # controllers
   
   get '/' do
-    @message = 'Hello world !'
     haml :index
   end
   

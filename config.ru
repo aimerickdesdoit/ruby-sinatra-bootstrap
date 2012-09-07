@@ -2,4 +2,10 @@
 
 require File.expand_path('../app.rb', __FILE__)
 
-run MyApp
+map '/assets' do
+  run Sinatra::Sprockets.environment
+end
+
+map '/' do
+  run MyApp
+end

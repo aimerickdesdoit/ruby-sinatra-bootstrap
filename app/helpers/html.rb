@@ -1,8 +1,7 @@
 module MyAppHelpers
   
   def stylesheets(files, media = :screen)
-    assets files, :stylesheets do |file|
-      file << '.css' unless file.match(/\.css$/)
+    assets files, :css do |file|
       <<-HTML
         <link href="#{url file}" media="#{media}" rel="stylesheet" type="text/css" />
       HTML
@@ -10,8 +9,7 @@ module MyAppHelpers
   end
   
   def javascripts(files)
-    assets files, :javascripts do |file|
-      file << '.js' unless file.match(/\.js$/)
+    assets files, :js do |file|
       <<-HTML
         <script src="#{file}" type="text/javascript"></script>
       HTML
@@ -20,11 +18,17 @@ module MyAppHelpers
   
   private
   
-  def assets(files, dir)
-    files.to_a.collect do |file|
-      file = "/assets/#{dir}/#{file}"
-      yield file
-    end.join("\n")
+  def assets(files, extension)
+    html = Array(files).collect do |file|
+      file = file.to_s
+      file << ".#{extension}" unless file.match(/\.#{extension}$/)
+      if asset = Sinatra::Sprockets.environment.find_asset(file)
+        yield "/assets/#{asset.digest_path}"
+      else
+        raise "Sprockets don't find asset #{file}"
+      end
+    end
+    html.join("\n")
   end
   
 end
