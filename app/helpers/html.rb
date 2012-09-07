@@ -2,6 +2,7 @@ module MyAppHelpers
   
   def stylesheets(files, media = :screen)
     assets files, :stylesheets do |file|
+      file << '.css' unless file.match(/\.css$/)
       <<-HTML
         <link href="#{url file}" media="#{media}" rel="stylesheet" type="text/css" />
       HTML
@@ -10,6 +11,7 @@ module MyAppHelpers
   
   def javascripts(files)
     assets files, :javascripts do |file|
+      file << '.js' unless file.match(/\.js$/)
       <<-HTML
         <script src="#{file}" type="text/javascript"></script>
       HTML
@@ -19,7 +21,7 @@ module MyAppHelpers
   private
   
   def assets(files, dir)
-    files.collect do |file|
+    files.to_a.collect do |file|
       file = "/assets/#{dir}/#{file}"
       yield file
     end.join("\n")

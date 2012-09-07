@@ -4,53 +4,67 @@ require File.expand_path('../config/application.rb', __FILE__)
 
 require 'logger'
 require 'sinatra/reloader'
+require 'sinatra/partial'
+require 'sinatra/content_for'
 
 class MyApp < Sinatra::Base
   
-  register Sinatra::Reloader
+  # configure
   
-  helpers MyAppHelpers
+  configure :development do
+    register Sinatra::Reloader
+    also_reload File.expand_path('app/helpers/*', root)
+  end
   
-  set({
-    :show_exceptions  => (environment == :development),
-    :public_folder    => "#{root}/public",
-    :views            => "#{root}/app/views"
-  })
-
-  class << self
+  configure do
+    helpers MyAppHelpers
+    helpers Sinatra::ContentFor
     
-    def logger
-      if MyApp.environment == :development
-        Logger.new(STDERR)
-      else
-        Logger.new(File.expand_path('../log/%s.log', __FILE__) % MyApp.environment)
-      end
+    register Sinatra::Partial
+    
+    set({
+      # :show_exceptions  => false, # test error handling
+      :public_folder    => "#{root}/public",
+      :views            => "#{root}/app/views",
+      :haml             => {
+        :layout => 'layouts/default'.to_sym
+      }
+    })
+  end
+  
+  # logger
+  
+  def self.logger
+    if development?
+      Logger.new(STDERR)
+    else
+      Logger.new(File.expand_path('../log/%s.log', __FILE__) % environment)
     end
-    
   end
-
-  before do
-    content_type :json, :default => true
-    @json = {
-      :environment => MyApp.environment
-    }
+  
+  def logger
+    self.class.logger
   end
+  
+  # error handling
 
   error Sinatra::NotFound do
-    @json[:message] = "No entry point for #{request.path_info}"
-    MyApp.logger.error @json[:message]
-    @json.to_json
+    @message = "No entry point for #{request.path_info}"
+    logger.error @message
+    haml 'errors/404'.to_sym
   end
 
   error do
-    @json[:message] = "Internal Server Error : #{request.env['sinatra.error'].message}"
-    MyApp.logger.error request.env['sinatra.error']
-    @json.to_json
+    @message = "Internal Server Error : #{request.env['sinatra.error'].message}"
+    logger.error request.env['sinatra.error']
+    haml 'errors/500'.to_sym
   end
   
+  # controllers
+  
   get '/' do
-    @json[:message] = 'Hello world !'
-    @json.to_json
+    @message = 'Hello world !'
+    haml :index
   end
   
 end

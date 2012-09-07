@@ -1,0 +1,8 @@
+!!! 5
+%html
+	%head
+		= stylesheets :reset
+		= yield_content :stylesheets
+	%body
+		= yield
+		= yield_content :javascripts
