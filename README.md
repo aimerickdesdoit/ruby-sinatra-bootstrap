@@ -1,5 +1,16 @@
 # Sinatra bootstrap
 
+## Supports
+
+* sinatra reloader
+* sinatra partial
+* sinatra content\_for
+* active record
+* haml
+* sass
+* compass
+* sprockets
+
 ## Installation
 
 	git clone git://github.com/aimerickdesdoit/ruby-sinatra-bootstrap.git
@@ -8,7 +19,7 @@
 	bundle install
 	rackup
 
-## json
+### json
 
 	# error handling
 
@@ -38,7 +49,7 @@
 	  @json.to_json
 	end
 
-## text/html
+### text/html
 
 	# error handling
 

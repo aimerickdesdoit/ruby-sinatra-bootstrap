@@ -2,6 +2,7 @@
 .project
 .DS_Store
 
+.sass-cache/*
 db/*.sqlite3
 public/assets/*
 

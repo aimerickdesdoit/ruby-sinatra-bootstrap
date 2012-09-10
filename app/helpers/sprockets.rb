@@ -1,7 +1,7 @@
 module SprocketsHelpers
   
   def stylesheets(files, media = :screen)
-    find_assets files, :css do |file|
+    asset_path files, :css do |file|
       <<-HTML
         <link href="#{file}" media="#{media}" rel="stylesheet" type="text/css" />
       HTML
@@ -9,7 +9,7 @@ module SprocketsHelpers
   end
 
   def javascripts(files)
-    find_assets files, :js do |file|
+    asset_path files, :js do |file|
       <<-HTML
         <script src="#{file}" type="text/javascript"></script>
       HTML
@@ -18,7 +18,7 @@ module SprocketsHelpers
 
   def image_tag(file, options = {})
     options = {:alt => '', :title => ''}.merge(options)
-    find_assets file do |file|
+    asset_path file do |file|
       <<-HTML
         <img src="#{file}"#{tag_attributes options} />
       HTML
@@ -27,15 +27,11 @@ module SprocketsHelpers
   
   private
   
-  def find_assets(files, extension = nil)
+  def asset_path(files, extension = nil)
     html = Array(files).collect do |file|
       file = file.to_s
       file << ".#{extension}" if extension && !file.match(/\.#{extension}$/)
-      if asset = Sinatra::Sprockets.environment.find_asset(file)
-        yield "/assets/#{asset.digest_path}"
-      else
-        raise "Sprockets don't find asset #{file}"
-      end
+      yield Sinatra::Sprockets.asset_path(file)
     end
     html.join("\n")
   end

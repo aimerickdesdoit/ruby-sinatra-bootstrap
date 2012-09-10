@@ -2,7 +2,7 @@
 
 require File.expand_path('../app.rb', __FILE__)
 
-map '/assets' do
+map Sinatra::Sprockets.assets_map_path do
   run Sinatra::Sprockets.environment
 end
 
