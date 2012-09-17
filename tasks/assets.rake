@@ -6,12 +6,12 @@ namespace :assets do
     
     environment = Sinatra::Sprockets.environment
     environment.each_logical_path do |logical_path|
-      if Sinatra::Sprockets.precompiled? logical_path
+      if Sinatra::Sprockets.precompile? logical_path
         if asset = environment.find_asset(logical_path)
           precompile_path = Sinatra::Sprockets.precompile_path(asset)
           FileUtils.mkdir_p File.dirname(precompile_path)
           asset.write_to precompile_path
-          puts "asset #{asset.logical_path} compiled"
+          puts "asset #{asset.logical_path} precompiled"
         end
       end
     end

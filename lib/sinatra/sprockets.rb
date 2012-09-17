@@ -8,15 +8,18 @@ module Sinatra
       
       attr_reader :configuration, :environment
     
-      def configure(app_root, &block)
-        @app_root = app_root
-        @environment = ::Sprockets::Environment.new(@app_root)
-        @environment.context_class.class_eval do
-          def asset_path(path, options = {})
-            Sinatra::Sprockets.asset_path(path)
+      def configure(app_root = nil, &block)
+        if app_root
+          @app_root = app_root
+          @environment = ::Sprockets::Environment.new(@app_root)
+          @environment.context_class.class_eval do
+            def asset_path(path, options = {})
+              Sinatra::Sprockets.asset_path(path)
+            end
           end
         end
-        @configuration = Configuration.new
+        raise 'Sprockets environment is not initialized' unless @environment
+        @configuration ||= Configuration.new
         yield self
       end
       
@@ -57,7 +60,7 @@ module Sinatra
         end
       end
 
-      def precompiled?(logical_path)
+      def precompile?(logical_path)
         if ['.css', '.js'].include? File.extname(logical_path)
           @configuration.precompile.include? logical_path.to_s
         else
