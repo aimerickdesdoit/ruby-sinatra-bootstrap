@@ -7,6 +7,7 @@ gem "sinatra-content-for", "~> 0.1"
 gem "rake", "~> 0.9.2"
 
 gem "json", "~> 1.7.3"
+gem "hashie", "~> 1.2.0"
 gem "haml", "~> 3.1.7"
 gem "sprockets", "~> 2.5.0"
 

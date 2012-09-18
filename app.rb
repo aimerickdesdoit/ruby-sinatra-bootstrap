@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.expand_path('../config/application.rb', __FILE__)
+require File.expand_path('../config/application', __FILE__)
 
 require 'logger'
 require 'sinatra/reloader'
@@ -25,7 +25,7 @@ class MyApp < Sinatra::Base
     
     set({
       # :show_exceptions  => false, # test error handling
-      :environment      => APP_ENV,
+      :environment      => MyAppConf.env,
       :public_folder    => "#{root}/public",
       :views            => "#{root}/app/views",
       :sass             => Compass.sass_engine_options,
