@@ -2,13 +2,13 @@
 
 ## Supports
 
+* active record
+* capistrano
+* haml
+* sass / compass
 * sinatra reloader
 * sinatra partial
 * sinatra content\_for
-* active record
-* haml
-* sass
-* compass
 * sprockets
 
 ## Installation
