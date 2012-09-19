@@ -1,10 +1,16 @@
+.~lock.*
+.tmp*
+**.orig
 .rvmrc
 .project
 .DS_Store
 
+TODO.md
+
 .sass-cache/*
 db/*.sqlite3
 public/assets/*
+public/system/*
 
 log/*
 !log/.gitkeep
