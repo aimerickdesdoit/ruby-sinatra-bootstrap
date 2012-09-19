@@ -28,7 +28,6 @@ class MyApp < Sinatra::Base
       :environment      => MyAppConf.env,
       :public_folder    => "#{root}/public",
       :views            => "#{root}/app/views",
-      :sass             => Compass.sass_engine_options,
       :haml             => {
         :format => :html5,
         :layout => 'layouts/default'.to_sym

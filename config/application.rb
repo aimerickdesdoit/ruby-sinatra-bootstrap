@@ -22,8 +22,9 @@ lib_dir = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib_dir) unless $LOAD_PATH.include?(lib_dir)
 
 MyAppConf = Hashie::Mash.new(:env => env)
-require File.expand_path("../environments/#{env}", __FILE__)
 
 [:helpers, :sprockets, :compass].each do |initializer|
   require File.expand_path("../initializers/#{initializer}", __FILE__)
 end
+
+require File.expand_path("../environments/#{env}", __FILE__)

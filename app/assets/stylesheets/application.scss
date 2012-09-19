@@ -1,2 +1,13 @@
 @import "compass";
 @import "compass/reset";
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background: url(asset-path('github.png')) no-repeat center center;
+	text-align: center;
+	font-size: 24px;
+	padding-top: 25px;
+}
