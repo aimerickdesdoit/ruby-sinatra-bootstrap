@@ -1,4 +1,4 @@
-#raise 'Capistrano must be configured'
+raise 'Capistrano must be configured'
 
 # Enable multi-stage support
 require 'capistrano/ext/multistage'
