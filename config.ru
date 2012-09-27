@@ -2,8 +2,10 @@
 
 require File.expand_path('../app', __FILE__)
 
-map Sinatra::Sprockets.assets_map_path do
-  run Sinatra::Sprockets.environment
+if MyAppConf.env == :development
+  map Sinatra::Sprockets.assets_map_path do
+    run Sinatra::Sprockets.environment
+  end
 end
 
 map '/' do

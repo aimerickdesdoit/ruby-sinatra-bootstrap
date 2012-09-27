@@ -3,7 +3,7 @@
 require File.expand_path('../config/application', __FILE__)
 
 require 'logger'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if MyAppConf.env == :development
 require 'sinatra/partial'
 require 'sinatra/content_for'
 
@@ -14,6 +14,7 @@ class MyApp < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
     also_reload File.expand_path('app/helpers/*', root)
+    also_reload File.expand_path('app/models/*', root)
   end
   
   configure do
