@@ -1,7 +1,7 @@
 module Sinatra
   module Sprockets
     class Configuration
-      attr_accessor :precompile
+      attr_accessor :precompile, :asset_host
     end
     
     class << self
@@ -23,10 +23,6 @@ module Sinatra
         yield self
       end
       
-      def digest?(logical_path)
-        ['.css', '.js'].include? File.extname(logical_path)
-      end
-      
       # PATHS
       
       def assets_map_path
@@ -36,9 +32,10 @@ module Sinatra
       def asset_path(logical_path)
         if asset = environment.find_asset(logical_path)
           if digest? asset.logical_path
-            "#{assets_map_path}/#{asset.digest_path}"
+            compute_asset_host "#{assets_map_path}/#{asset.digest_path}"
           else
-            "#{assets_map_path}/#{asset.logical_path}?#{asset.mtime.to_i}"
+            path = compute_asset_host "#{assets_map_path}/#{asset.logical_path}"
+            "#{path}?#{asset.mtime.to_i}"
           end
         else
           raise "Sprockets don't find asset #{logical_path}"
@@ -67,7 +64,21 @@ module Sinatra
           true
         end
       end
-            
+      
+      private
+      
+      def compute_asset_host(path)
+        if @configuration.asset_host
+          @configuration.asset_host.call path
+        else
+          path
+        end
+      end
+      
+      def digest?(logical_path)
+        ['.css', '.js'].include? File.extname(logical_path)
+      end
+      
     end
   end
 end

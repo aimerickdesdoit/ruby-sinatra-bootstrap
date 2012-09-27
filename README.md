@@ -9,7 +9,7 @@
 * sinatra reloader
 * sinatra partial
 * sinatra content\_for
-* sprockets
+* sprockets / asset hosts
 
 ## Installation
 
@@ -69,4 +69,40 @@
 
 	get '/' do
 	  haml :index
+	end
+
+## Assets
+
+### asset_host
+
+with numeric based domains
+
+	Sinatra::Sprockets.configure do |sprockets|
+	  sprockets.configuration.asset_host = lambda do |path|
+	    domain = 'http://assets%d.localhost:9292'
+	    "#{domain % (path.length % 3)}#{path}"
+	  end
+	end
+
+with customized domains
+
+	Sinatra::Sprockets.configure do |sprockets|
+	  sprockets.configuration.asset_host = lambda do |path|
+	    domains = %w(assets0.localhost assets1.localhost assets2.localhost)
+	    "http://#{domains[path.length % domains.count]}:9292#{path}"
+	  end
+	end
+
+with extension based domains
+
+	Sinatra::Sprockets.configure do |sprockets|
+	  sprockets.configuration.asset_host = lambda do |path|
+	    domains = {
+	      :css  => 'stylesheets.localhost',
+	      :js   => 'javascripts.localhost',
+	      :png  => 'images.localhost'
+	    }
+	    domain = domains[File.extname(path).gsub('.', '').downcase.to_sym] || 'assets.localhost'
+	    "http://#{domain}:9292#{path}"
+	  end
 	end
