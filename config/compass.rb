@@ -1,5 +1,9 @@
 # Require any additional compass plugins here.
 
+images_dir = 'app/assets/images'
+http_path = "/"
+http_images_dir = "assets"
+
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed
 output_style = (Compass.configuration.environment == :development) ? :expanded : :compressed
