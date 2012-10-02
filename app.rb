@@ -39,10 +39,10 @@ class MyApp < Sinatra::Base
   # logger
   
   def self.logger
-    if development?
+    @logger ||= if development?
       Logger.new(STDERR)
     else
-      Logger.new(File.expand_path('../log/%s.log', __FILE__) % environment)
+      Logger.new(File.expand_path('log/%s.log', root) % environment)
     end
   end
   
