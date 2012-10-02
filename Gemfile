@@ -20,6 +20,7 @@ gem "sprockets-sass", "~> 0.9.0"
 # Databases
 # gem "activerecord", "~> 3.2.8"
 # gem "sqlite3", "~> 1.3.6"
+# gem "mysql2", "~> 0.3.11"
 
 group :development do
   # Base Framework
