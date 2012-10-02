@@ -9,7 +9,7 @@
 * sinatra reloader
 * sinatra partial
 * sinatra content\_for
-* sprockets / asset hosts
+* sprockets / asset hosts / manifest
 
 ## Installation
 
