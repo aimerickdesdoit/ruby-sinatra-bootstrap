@@ -24,6 +24,10 @@ module SprocketsHelpers
       HTML
     end
   end
+
+  def image_path(file)
+    Sinatra::Sprockets.asset_path(file)
+  end
   
   private
   
