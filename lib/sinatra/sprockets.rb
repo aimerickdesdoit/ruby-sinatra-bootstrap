@@ -39,21 +39,24 @@ module Sinatra
       end
 
       def asset_path(logical_path, options = {})
+        suffix = nil
+
         path = if @manifest
-          compute_asset_host @manifest[logical_path]
+          @manifest[logical_path]
         else
           if asset = environment.find_asset(logical_path, options)
             if digest? asset.logical_path
-              compute_asset_host "#{assets_map_path}/#{asset.digest_path}"
+              "#{assets_map_path}/#{asset.digest_path}"
             else
-              path = compute_asset_host "#{assets_map_path}/#{asset.logical_path}"
-              "#{path}?#{asset.mtime.to_i}"
+              suffix = "?#{asset.mtime.to_i}"
+              "#{assets_map_path}/#{asset.logical_path}"
             end
           end
         end
-        
+
         raise "Sprockets doesn't find asset #{logical_path}" unless path
-        path
+
+        "#{compute_asset_host path}#{suffix}"
       end
       
       # PRECOMPILE
