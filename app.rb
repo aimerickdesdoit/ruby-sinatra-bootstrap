@@ -4,8 +4,6 @@ require File.expand_path('../config/application', __FILE__)
 
 require 'logger'
 require 'sinatra/reloader' if MyAppConf.env == :development
-require 'sinatra/partial'
-require 'sinatra/content_for'
 
 class MyApp < Sinatra::Base
   
@@ -18,11 +16,8 @@ class MyApp < Sinatra::Base
   end
   
   configure do
-    helpers HtmlHelpers
-    helpers SprocketsHelpers
-    helpers Sinatra::ContentFor
-    
-    register Sinatra::Partial
+    register Padrino::Helpers
+    # register Padrino::Mailer
     
     set({
       # :show_exceptions  => false, # test error handling

@@ -1,9 +1,9 @@
 !!! 5
 %html
 	%head
-		= stylesheets :application
+		= stylesheet_link_tag :application
 		= yield_content :stylesheets
 	%body
 		= yield
-		= javascripts :application
+		= javascript_include_tag :application
 		= yield_content :javascripts
