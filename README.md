@@ -5,10 +5,10 @@
 * active record
 * capistrano
 * haml
+* padrino helpers
+* padrino mailers
 * sass / compass
 * sinatra reloader
-* sinatra partial
-* sinatra content\_for
 * sprockets / asset hosts / manifest
 
 ## Installation
@@ -80,7 +80,7 @@ with numeric based domains
 	Sinatra::Sprockets.configure do |sprockets|
 	  sprockets.configuration.asset_host = lambda do |path|
 	    domain = 'http://assets%d.localhost:9292'
-	    "#{domain % (path.length % 3)}#{path}"
+	    "#{domain % (path.hash % 3)}#{path}"
 	  end
 	end
 
@@ -89,7 +89,7 @@ with customized domains
 	Sinatra::Sprockets.configure do |sprockets|
 	  sprockets.configuration.asset_host = lambda do |path|
 	    domains = %w(assets0.localhost assets1.localhost assets2.localhost)
-	    "http://#{domains[path.length % domains.count]}:9292#{path}"
+	    "http://#{domains[path.hash % domains.count]}:9292#{path}"
 	  end
 	end
 

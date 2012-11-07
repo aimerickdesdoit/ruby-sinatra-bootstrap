@@ -58,6 +58,17 @@ module Sinatra
 
         "#{compute_asset_host path}#{suffix}"
       end
+
+      def system_path(logical_path, options = {})
+        @system_paths ||= {}
+        return @system_paths[logical_path] if @system_paths[logical_path]
+
+        file = File.expand_path("public/system/#{logical_path}", @app_root)
+
+        suffix = "?#{File.exists?(file) ? File.mtime(file).to_i : Time.now.to_i}"
+        path = "/system/#{logical_path}"
+        @system_paths[logical_path] = "#{compute_asset_host path}#{suffix}"
+      end
       
       # PRECOMPILE
       

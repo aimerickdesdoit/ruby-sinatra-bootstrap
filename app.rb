@@ -26,7 +26,8 @@ class MyApp < Sinatra::Base
       :views            => "#{root}/app/views",
       :haml             => {
         :format => :html5,
-        :layout => 'layouts/default'.to_sym
+        :layout => 'layouts/default'.to_sym,
+        :attr_wrapper => '"'
       }
     })
   end
